@@ -1,0 +1,78 @@
+color:
+	+ Tên màu
+	+ Hexa 
+	+ Rgb
+	+ Rgba
+font-size: rem, em, vh, vw, px
+font-weight: 
+font-family:
+border: tạo đường viền
+border-radius: bo góc đường viền
+width: chỉnh chiều rộng của phần tử
+height: chỉnh chiều cao của phần tử
+background: 
+background-image:
+
+margin: 20px;
+=>margin-top: 20px;
+=>margin-right: 20px;
+=>margin-bottom: 20px;
+=>margin-left: 20px;
+
+margin: 10px 20px;
+=>margin-top: 10px;
+=>margin-right: 20px;
+=>margin-bottom: 10px;
+=>margin-left: 20px;
+
+margin: 10px 20px 30px;
+=>margin-top: 10px;
+=>margin-right: 20px;
+=>margin-bottom: 30px;
+=>margin-left: 20px;
+
+margin: 10px 20px 30px 40px;
+=>margin-top: 10px;
+=>margin-right: 20px;
+=>margin-bottom: 30px;
+=>margin-left: 40px;
+
+-Margin có nhận giá trị âm
+
+padding: đệm
+padding: 20px;
+=>padding-top: 20px;
+=>padding-right: 20px;
+=>padding-bottom: 20px;
+=>padding-left: 20px;
+
+padding: 10px 20px;
+=>padding-top: 10px;
+=>padding-right: 20px;
+=>padding-bottom: 10px;
+=>padding-left: 20px;
+
+padding: 10px 20px 30px;
+=>padding-top: 10px;
+=>padding-right: 20px;
+=>padding-bottom: 30px;
+=>padding-left: 20px;
+
+padding: 10px 20px 30px 40px;
+=>padding-top: 10px;
+=>padding-right: 20px;
+=>padding-bottom: 30px;
+=>padding-left: 40px;
+
+
+border: 2px black solid || black solid 2px
+	+border-width: 2px
+	+border-color: black
+	+border-style: solid
+	
+border-top:
+border-right:
+border-left:
+border-bottom:
+
+border-radius: bo góc đường viền
