@@ -56,10 +56,26 @@
 // 	console.log(i);
 // } while (i < 10);
 
-for (let i = 0; i<=5; i++) {
-	if (i === 4) {
-		continue;
-	}
-	console.log(i);
-	
+// for (let i = 0; i<=5; i++) {
+// 	if (i === 4) {
+// 		continue;
+// 	}
+// 	console.log(i);
+
+// }
+
+// In ra các số chia hết cho 2 và 3 từ 1 đến 300.
+// for (let j = 1; j <= 300; j++) {
+// 	if (j % 2 === 0 && j % 3 === 0) {
+// 		console.log(j);
+// 	}
+// }
+
+// Nhập vào số n. Tính giai thừa của số n.
+let n = Number(prompt('Nhập n'));
+console.log(n);
+let gt = 1;
+for (let i = 1; i <= n; i++) {
+	gt = gt * i;
 }
+console.log(gt);
