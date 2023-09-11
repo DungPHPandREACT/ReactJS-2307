@@ -68,4 +68,5 @@ for (let j = 0; j < listNumber.length; j++) {
 // -Kiểm tra xem trong mảng có số nhỏ hơn 10 hay không.
 // -Kiểm tra xem tất cả phần tử trong mảng có lớn hơn 20 không.
 // -Nhập vào số n cho đến khi n là 1 số trong mảng s.
+// includes javascript
 // -Sử dụng thuật toán Bubble Sort để sắp xếp phần tử theo thứ tự tăng dần.
