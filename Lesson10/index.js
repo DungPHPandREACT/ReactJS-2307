@@ -82,18 +82,72 @@
 // 	+ 1,2,3,4,5,6
 // 	+ 3,5,7,10,20,30,40
 
-function sum(...listNumber) {
-	console.log(listNumber); //
-	// Tính tổng các phần tử trong mảng
-}
+// function sum(...listNumber) {
+// 	console.log(listNumber); //
+// 	// Tính tổng các phần tử trong mảng
+// }
 // sum(1, 2, 3);
 // sum(1, 2, 3, 4);
 // sum(1, 2, 3, 4, 5);
-sum(1, 2, 3, 4, 5, 6);
+// sum(1, 2, 3, 4, 5, 6);
 // sum(3, 5, 7, 10, 20, 30, 40);
 
 // +default parameter
+// function logger(a='a', b='b', c='c', d='d') {
+// 	console.log(a); //
+// 	console.log(b); //
+// 	console.log(c);
+// 	console.log(d);
+// }
+// logger(1,2);
 
-// +destructuring
-// +arrow function
+// +destructuring: bóc tách mảng, object
+// const time = {
+// 	day: 18,
+// 	month: 9,
+// };
+// // 3 biến day,month, year
+// // let day = time.day;
+// // let month = time.month;
+// // let year = time.year;
+// let { day:d = 1, month = 1, year = 1 } = time;
+// //d = time.day
+// console.log(d);
+
+// const array = [1, 2, 3, 4, 5];
+// //number1 = array[0];
+// const [number1, ...number2] = array;
+// console.log(number2);
+
 // +module
+
+// function logger(file) {
+// 	console.log(`In ra từ: ${file}`);
+// }
+// logger('index.js');
+
+// const NUMBER = 10;
+
+// export { logger, NUMBER };
+
+// export default NUMBER;
+
+// +arrow function
+
+// function nameFunction(parameter1, parameter2, ... parameterN){
+// code block
+// }
+
+// function sum(a, b) {
+// 	console.log(a + b);
+// }
+
+// const/let/var nameFunction = (parameter1, parameter2, ... parameterN) => {
+// code block
+// }
+const sum = (a, b) => a + b;
+
+console.log(sum(3, 5));
+
+// function bình thường có cơ chế hoisting và có context
+// arrow function k có cơ chế hoisting và k có context
