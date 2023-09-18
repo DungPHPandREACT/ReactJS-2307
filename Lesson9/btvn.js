@@ -52,3 +52,5 @@ for (let element of array) {
 	}
 }
 console.log(divide2);
+
+// 

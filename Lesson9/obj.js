@@ -132,10 +132,25 @@ const listStudent = [
 // funcC(funcX, funcZ);
 
 // setTimeout(callback, milliseconds)
-function fnTimeout() {
-	console.log('Hello world!');
+// function fnTimeout() {
+// 	console.log('Hello world!');
+// }
+// // setTimeout(fnTimeout, 3000);
+// setInterval(function fnInterval (){
+//     console.log('Set Interval')
+// }, 1000);
+
+// 2. Khai báo 1 function với đầu vào là 3 số a, b, c.
+//  Kiểm tra xem a, b, c có tạo thành 3 cạnh của tam giác không.
+// Nếu tạo thành tam giác, đầu ra là true. Ngược lại, đầu ra là false.
+
+function checkTriangle(a, b, c) {
+	if (a > 0 && b > 0 && c > 0) {
+		if (a + b > c && a + c > b && b + c > a) {
+			return true;
+		}
+	}
+	return false;
 }
-// setTimeout(fnTimeout, 3000);
-setInterval(function fnInterval (){
-    console.log('Set Interval')
-}, 1000);
+
+console.log(checkTriangle(9,10,11));
