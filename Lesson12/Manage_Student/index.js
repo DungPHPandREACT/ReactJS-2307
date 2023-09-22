@@ -29,6 +29,7 @@ const listStudent = [
 	},
 ];
 
+// In thông tin học sinh ra
 let stringHTML = '';
 
 for (let i = 0; i < listStudent.length; i++) {
@@ -55,3 +56,19 @@ for (let i = 0; i < listStudent.length; i++) {
 
 // console.log(stringHTML);
 document.getElementById('data-student').innerHTML = stringHTML;
+
+// Add student
+// Bước 1: Gán sự kiện on click cho button "Add student"
+// Bước 2: Trong hàm xử lý sự kiện
+    // -Lấy được dữ liệu người dùng đang nhập ở input
+    // -Tạo 1 object mới chứa các thông tin vừa lấy được, push vào mảng
+    // -
+
+// Delete student
+// Bước 1: Gán sự kiện onclick cho các button delete
+// Bước 2: Trong hàm xử lý sự kiện
+    // -Lấy được id của học sinh đang được click
+    // -Tìm vị trí index của học sinh đó trong listStudent
+    // -Xóa học sinh đó trong mảng listStudent
+
+// Khi reload lại trang web, dữ liệu không bị mất
