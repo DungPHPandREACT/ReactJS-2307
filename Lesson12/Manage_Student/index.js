@@ -43,7 +43,7 @@ function renderData(data = []) {
 		<td scope="col">${data[i].point}</td>
 		<td scope="col">
             <div>
-                <button class="btn btn-success" style="margin: 0 4px">
+                <button class="btn btn-success" style="margin: 0 4px" onclick="updateStudent(${data[i].id})">
                     Update
                 </button>
                 <button class="btn btn-danger" style="margin: 0 4px" onclick="deleteStudent(${data[i].id})">
@@ -111,6 +111,43 @@ function deleteStudent(id) {
 	renderData(listStudent);
 }
 
-// Khi reload lại trang web, dữ liệu không bị mất
+// Update student
+// Bước 1: Gán sự kiện onclick cho các button update
+function updateStudent(id) {
+	// Bước 2: Trong hàm xử lý sự kiện
+	// -Lấy được id hoặc full thông tin của học sinh đang được click
+	const student = listStudent.find((e) => e.id === id);
+	// -Hiển thị thông tin của học sinh lên các ô input tương ứng
+	document.getElementById('id').value = student.id;
+	document.getElementById('name').value = student.name;
+	document.getElementById('age').value = student.age;
+	document.getElementById('gender').value = student.gender;
+	document.getElementById('point').value = student.point;
+
+	document.getElementById('btn-add').style.display = 'none';
+	document.getElementById('btn-update').style.display = 'inline';
+}
+document.getElementById('btn-update').onclick = function () {
+	// Bước 3: Lấy thông tin người dùng vừa sửa trong các thẻ input
+	const id = document.getElementById('id').value;
+	const name = document.getElementById('name').value;
+	const age = document.getElementById('age').value;
+	const gender = document.getElementById('gender').value;
+	const point = document.getElementById('point').value;
+	// Bước 4: Update dữ liệu vào trong mảng
+	const index = listStudent.findIndex((student) => student.id === Number(id));
+
+	console.log(listStudent[index]);
+
+	listStudent[index].name = name;
+	listStudent[index].age = age;
+	listStudent[index].gender = gender;
+	listStudent[index].point = point;
+
+	document.getElementById('btn-update').style.display = 'none';
+	document.getElementById('btn-add').style.display = 'inline';
+	clearInput();
+	renderData(listStudent);
+};
 
 renderData(listStudent);
