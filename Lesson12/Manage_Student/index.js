@@ -46,7 +46,7 @@ function renderData(data = []) {
                 <button class="btn btn-success" style="margin: 0 4px">
                     Update
                 </button>
-                <button class="btn btn-danger" style="margin: 0 4px">
+                <button class="btn btn-danger" style="margin: 0 4px" onclick="deleteStudent(${data[i].id})">
                     Delete
                 </button>
             </div>
@@ -80,24 +80,36 @@ document.getElementById('btn-add').onclick = function () {
 	const point = document.getElementById('point').value;
 	// -Tạo 1 object mới chứa các thông tin vừa lấy được, push vào mảng
 	const newStudent = {
-		id: id,
-		name: name,
-		age: age,
-		gender: gender,
-		point: point,
+		id,
+		name,
+		age,
+		gender,
+		point,
 	};
 	listStudent.push(newStudent);
 	clearInput();
+	// In lại listStudent
 	renderData(listStudent);
-	// -
 };
 
 // Delete student
 // Bước 1: Gán sự kiện onclick cho các button delete
-// Bước 2: Trong hàm xử lý sự kiện
-// -Lấy được id của học sinh đang được click
-// -Tìm vị trí index của học sinh đó trong listStudent
-// -Xóa học sinh đó trong mảng listStudent
+function deleteStudent(id) {
+	// Bước 2: Trong hàm xử lý sự kiện
+	// -Lấy được id của học sinh đang được click
+	// let index = -1;
+	// for (let i = 0; i < listStudent.length; i++) {
+	// 	if (listStudent[i].id == id) {
+	// 		index = i;
+	// 		break;
+	// 	}
+	// }
+	// -Tìm vị trí index của học sinh đó trong listStudent
+	const index = listStudent.findIndex((student) => student.id == id);
+	// -Xóa học sinh đó trong mảng listStudent
+	listStudent.splice(index, 1);
+	renderData(listStudent);
+}
 
 // Khi reload lại trang web, dữ liệu không bị mất
 
