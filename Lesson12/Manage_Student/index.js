@@ -68,16 +68,29 @@ function clearInput() {
 	document.getElementById('point').value = '';
 }
 
-// Add student
-// Bước 1: Gán sự kiện on click cho button "Add student"
-document.getElementById('btn-add').onclick = function () {
-	// Bước 2: Trong hàm xử lý sự kiện
-	// -Lấy được dữ liệu người dùng đang nhập ở input
+// function get info student
+function getDataFromInput() {
 	const id = document.getElementById('id').value;
 	const name = document.getElementById('name').value;
 	const age = document.getElementById('age').value;
 	const gender = document.getElementById('gender').value;
 	const point = document.getElementById('point').value;
+
+	return {
+		id,
+		name,
+		age,
+		gender,
+		point,
+	};
+}
+
+// Add student
+// Bước 1: Gán sự kiện on click cho button "Add student"
+document.getElementById('btn-add').onclick = function () {
+	// Bước 2: Trong hàm xử lý sự kiện
+	// -Lấy được dữ liệu người dùng đang nhập ở input
+	const { id, name, age, gender, point } = getDataFromInput();
 	// -Tạo 1 object mới chứa các thông tin vừa lấy được, push vào mảng
 	const newStudent = {
 		id,
@@ -126,18 +139,15 @@ function updateStudent(id) {
 
 	document.getElementById('btn-add').style.display = 'none';
 	document.getElementById('btn-update').style.display = 'inline';
+	document.getElementById('id').setAttribute('disabled', true);
 }
 document.getElementById('btn-update').onclick = function () {
 	// Bước 3: Lấy thông tin người dùng vừa sửa trong các thẻ input
-	const id = document.getElementById('id').value;
-	const name = document.getElementById('name').value;
-	const age = document.getElementById('age').value;
-	const gender = document.getElementById('gender').value;
-	const point = document.getElementById('point').value;
+	const { id, name, age, gender, point } = getDataFromInput();
+
+	document.getElementById('id').setAttribute('disabled', false);
 	// Bước 4: Update dữ liệu vào trong mảng
 	const index = listStudent.findIndex((student) => student.id === Number(id));
-
-	console.log(listStudent[index]);
 
 	listStudent[index].name = name;
 	listStudent[index].age = age;
