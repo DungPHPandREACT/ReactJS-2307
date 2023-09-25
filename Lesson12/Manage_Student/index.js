@@ -139,13 +139,13 @@ function updateStudent(id) {
 
 	document.getElementById('btn-add').style.display = 'none';
 	document.getElementById('btn-update').style.display = 'inline';
-	document.getElementById('id').setAttribute('disabled', true);
+	document.getElementById('id').disabled = true;
 }
 document.getElementById('btn-update').onclick = function () {
 	// Bước 3: Lấy thông tin người dùng vừa sửa trong các thẻ input
 	const { id, name, age, gender, point } = getDataFromInput();
 
-	document.getElementById('id').setAttribute('disabled', false);
+	document.getElementById('id').disabled = false;
 	// Bước 4: Update dữ liệu vào trong mảng
 	const index = listStudent.findIndex((student) => student.id === Number(id));
 
@@ -158,6 +158,39 @@ document.getElementById('btn-update').onclick = function () {
 	document.getElementById('btn-add').style.display = 'inline';
 	clearInput();
 	renderData(listStudent);
+};
+
+// Bước 1: Gán sự kiện onclick cho button search
+document.getElementById('btn-search').onclick = function () {
+	// Bước 2: Lấy keyword người dùng nhập từ input
+	const keyword = document.getElementById('input-search').value;
+	// Bước 3: Sử dụng hàm filter để lọc theo từ khóa người dùng nhập
+	const dataSearch = listStudent.filter(
+		(student) =>
+			student.id == keyword ||
+			student.age == keyword ||
+			student.name.includes(keyword) ||
+			student.point == keyword ||
+			student.gender == keyword
+	);
+
+	renderData(dataSearch);
+};
+
+document.getElementById('input-search').oninput = function () {
+	// Bước 2: Lấy keyword người dùng nhập từ input
+	const keyword = document.getElementById('input-search').value;
+	// Bước 3: Sử dụng hàm filter để lọc theo từ khóa người dùng nhập
+	const dataSearch = listStudent.filter(
+		(student) =>
+			student.id == keyword ||
+			student.age == keyword ||
+			student.name.includes(keyword) ||
+			student.point == keyword ||
+			student.gender == keyword
+	);
+
+	renderData(dataSearch);
 };
 
 renderData(listStudent);
