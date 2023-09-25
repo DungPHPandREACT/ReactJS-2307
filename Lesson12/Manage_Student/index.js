@@ -1,33 +1,7 @@
-const listStudent = [
-	{
-		id: 1,
-		name: 'Nguyễn Văn A',
-		age: 15,
-		gender: 'boy',
-		point: 10,
-	},
-	{
-		id: 2,
-		name: 'Trần Thị B',
-		age: 15,
-		gender: 'girl',
-		point: 5,
-	},
-	{
-		id: 3,
-		name: 'Binz',
-		age: 15,
-		gender: 'girl',
-		point: 7,
-	},
-	{
-		id: 4,
-		name: 'ABC',
-		age: 15,
-		gender: 'girl',
-		point: 10,
-	},
-];
+let listStudent = [];
+if (localStorage.getItem('listStudent') !== null) {
+	listStudent = JSON.parse(localStorage.getItem('listStudent'));
+}
 
 function renderData(data = []) {
 	// In thông tin học sinh ra
@@ -100,6 +74,7 @@ document.getElementById('btn-add').onclick = function () {
 		point,
 	};
 	listStudent.push(newStudent);
+	localStorage.setItem('listStudent', JSON.stringify(listStudent));
 	clearInput();
 	// In lại listStudent
 	renderData(listStudent);
@@ -121,6 +96,7 @@ function deleteStudent(id) {
 	const index = listStudent.findIndex((student) => student.id == id);
 	// -Xóa học sinh đó trong mảng listStudent
 	listStudent.splice(index, 1);
+	localStorage.setItem('listStudent', JSON.stringify(listStudent));
 	renderData(listStudent);
 }
 
@@ -154,6 +130,8 @@ document.getElementById('btn-update').onclick = function () {
 	listStudent[index].gender = gender;
 	listStudent[index].point = point;
 
+	localStorage.setItem('listStudent', JSON.stringify(listStudent));
+
 	document.getElementById('btn-update').style.display = 'none';
 	document.getElementById('btn-add').style.display = 'inline';
 	clearInput();
@@ -185,12 +163,12 @@ document.getElementById('input-search').oninput = function () {
 		(student) =>
 			student.id == keyword ||
 			student.age == keyword ||
-			student.name.includes(keyword) ||
+			student.name.toLowerCase().includes(keyword.toLowerCase()) ||
 			student.point == keyword ||
 			student.gender == keyword
 	);
-
+	// Bước 4: In ra màn hình dữ liệu trả về
 	renderData(dataSearch);
 };
-
+//Lưu dữ liệu vào local storage
 renderData(listStudent);
