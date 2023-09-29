@@ -31,6 +31,25 @@ function renderData(data = []) {
 
 	// console.log(stringHTML);
 	document.getElementById('data-student').innerHTML = stringHTML;
+
+	// In ra số lượng trang
+	let pages = Math.ceil(data.length / 10);
+	let pageHTML = '';
+	for (let i = 1; i <= pages; i++) {
+		pageHTML += `<li class="page-item active">
+		<a class="page-link" href="#">${i}</a>
+	</li>`;
+	}
+	pageHTML = `
+		<li class="page-item ${pages === 1 ? 'disabled' : ''}">
+			<a class="page-link">Previous</a>
+		</li>
+		${pageHTML}
+		<li class="page-item ${pages === 1 ? 'disabled' : ''}">
+			<a class="page-link" href="#">Next</a>
+		</li>
+	`;
+	document.getElementById('pagination').innerHTML = pageHTML;
 }
 
 // function clear input
@@ -105,7 +124,7 @@ function deleteStudent(id) {
 function updateStudent(id) {
 	// Bước 2: Trong hàm xử lý sự kiện
 	// -Lấy được id hoặc full thông tin của học sinh đang được click
-	const student = listStudent.find((e) => e.id === id);
+	const student = listStudent.find((e) => e.id == id);
 	// -Hiển thị thông tin của học sinh lên các ô input tương ứng
 	document.getElementById('id').value = student.id;
 	document.getElementById('name').value = student.name;
@@ -123,7 +142,7 @@ document.getElementById('btn-update').onclick = function () {
 
 	document.getElementById('id').disabled = false;
 	// Bước 4: Update dữ liệu vào trong mảng
-	const index = listStudent.findIndex((student) => student.id === Number(id));
+	const index = listStudent.findIndex((student) => student.id == Number(id));
 
 	listStudent[index].name = name;
 	listStudent[index].age = age;
