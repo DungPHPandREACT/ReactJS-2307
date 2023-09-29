@@ -12,7 +12,7 @@ function renderData(data = []) {
 		stringHTML += `
     <tr>
 		<td scope="col">${data[i].id}</td>
-		<td scope="col">${data[i].name}</td>
+		<td scope="col"><a href="./detail.html?id=${data[i].id}">${data[i].name}</a></td>
 		<td scope="col">${data[i].age}</td>
 		<td scope="col">${data[i].gender}</td>
 		<td scope="col">${data[i].point}</td>
@@ -74,8 +74,7 @@ function handleSelectedPage(page) {
 	if (student_end >= listStudent.length) {
 		student_end = listStudent.length;
 	}
-	console.log('student_start: ', student_start);
-	console.log('student_end: ', student_end);
+
 	const dataPagination = listStudent.slice(student_start, student_end);
 
 	console.log(dataPagination);
