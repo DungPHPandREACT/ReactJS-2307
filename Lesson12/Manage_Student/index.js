@@ -1,4 +1,5 @@
 let listStudent = [];
+let pageCurrent = 1;
 if (localStorage.getItem('listStudent') !== null) {
 	listStudent = JSON.parse(localStorage.getItem('listStudent'));
 }
@@ -32,24 +33,53 @@ function renderData(data = []) {
 	// console.log(stringHTML);
 	document.getElementById('data-student').innerHTML = stringHTML;
 
+	handleRenderPaginations();
+}
+
+function handleRenderPaginations() {
 	// In ra số lượng trang
-	let pages = Math.ceil(data.length / 10);
+	let pages = Math.ceil(listStudent.length / 10);
 	let pageHTML = '';
 	for (let i = 1; i <= pages; i++) {
-		pageHTML += `<li class="page-item active">
-		<a class="page-link" href="#">${i}</a>
+		pageHTML += `<li class="page-item ${pageCurrent === i ? 'active' : ''}">
+		<a class="page-link" onclick="handleSelectedPage(${i})">${i}</a>
 	</li>`;
 	}
 	pageHTML = `
-		<li class="page-item ${pages === 1 ? 'disabled' : ''}">
-			<a class="page-link">Previous</a>
+		<li class="page-item ${pageCurrent == 1 ? 'disabled' : ''}">
+			<a class="page-link" onclick="handleSelectedPage('prev')">Previous</a>
 		</li>
 		${pageHTML}
-		<li class="page-item ${pages === 1 ? 'disabled' : ''}">
-			<a class="page-link" href="#">Next</a>
+		<li class="page-item ${pages == pageCurrent ? 'disabled' : ''}">
+			<a class="page-link" onclick="handleSelectedPage('next')" >Next</a>
 		</li>
 	`;
 	document.getElementById('pagination').innerHTML = pageHTML;
+}
+
+function handleSelectedPage(page) {
+	if (page == 'prev') {
+		pageCurrent = pageCurrent - 1;
+	} else if (page == 'next') {
+		pageCurrent = pageCurrent + 1;
+	} else {
+		pageCurrent = page;
+	}
+
+	let student_start = (pageCurrent - 1) * 10;
+	if (pageCurrent === 1) {
+		student_start = 0;
+	}
+	let student_end = student_start + 10;
+	if (student_end >= listStudent.length) {
+		student_end = listStudent.length;
+	}
+	console.log('student_start: ', student_start);
+	console.log('student_end: ', student_end);
+	const dataPagination = listStudent.slice(student_start, student_end);
+
+	console.log(dataPagination);
+	renderData(dataPagination);
 }
 
 // function clear input
@@ -190,4 +220,5 @@ document.getElementById('input-search').oninput = function () {
 	renderData(dataSearch);
 };
 //Lưu dữ liệu vào local storage
-renderData(listStudent);
+// renderData(listStudent);
+handleSelectedPage(1);
