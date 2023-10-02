@@ -81,10 +81,44 @@ function logTime(time) {
 
 // logger();
 
-console.log(1);
-try {
-	console.log(name);
-} catch (err) {
-	console.log(err);
+// console.log(1);
+// try {
+// 	console.log(name);
+// } catch (err) {
+// 	console.log(err);
+// }
+// console.log(3);
+
+// https://64c25bf6eb7fd5d6ebcfb370.mockapi.io/api/v1/users
+
+// fetch('https://64c25bf6eb7fd5d6ebcfb370.mockapi.io/api/v1/users')
+// 	.then((response) => {
+// 		console.log(response);
+// 		return response.json();
+// 	})
+// 	.then((data) => {
+// 		console.log(data);
+// 	})
+// 	.catch((err) => console.log(err));
+
+async function getAllStudent() {
+	try {
+		const res = await fetch(
+			'https://64c25bf6eb7fd5d6ebcfb370.mockapi.io/api/v1/users'
+		);
+		const data = await res.json();
+		console.log(data);
+        renderNamesStudent(data);
+	} catch (err) {
+		console.log(err);
+	}
 }
-console.log(3);
+function renderNamesStudent(data) {
+	let stringHTML = '';
+	for (let element of data) {
+		stringHTML += `<h1>${element.name}</h1>`;
+	}
+
+	document.getElementById('all-name').innerHTML = stringHTML;
+}
+getAllStudent();
