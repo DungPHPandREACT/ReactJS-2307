@@ -1,4 +1,4 @@
-import { Button, Input } from 'antd';
+import { Button, Input, message } from 'antd';
 import { useFormik } from 'formik';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 
 const CreateProduct = ({ listProducts, setListProducts }) => {
 	const [statusPage, setStatusPage] = useState('create');
+	const [messageApi, contextHolder] = message.useMessage();
 	// Cách 1
 	// const product = {};
 	// const getId = (e) => {
@@ -49,8 +50,22 @@ const CreateProduct = ({ listProducts, setListProducts }) => {
 		onSubmit: (values) => {
 			if (statusPage === 'create') {
 				setListProducts([...listProducts, values]);
+				messageApi.open({
+					type: 'success',
+					content: 'Create succcessfully',
+				});
 			} else {
-				console.log('edit product');
+				const dataTemp = [...listProducts];
+				const index = dataTemp.findIndex((product) => product.id === values.id);
+
+				dataTemp[index] = { ...values };
+
+				setListProducts([...dataTemp]);
+
+				messageApi.open({
+					type: 'success',
+					content: 'Edited succcessfully',
+				});
 			}
 		},
 		validationSchema: Yup.object().shape({
@@ -73,6 +88,7 @@ const CreateProduct = ({ listProducts, setListProducts }) => {
 
 	return (
 		<Container>
+			{contextHolder}
 			<form onSubmit={formik.handleSubmit}>
 				<div className='mt-5'>
 					<Input
@@ -82,6 +98,7 @@ const CreateProduct = ({ listProducts, setListProducts }) => {
 						onChange={formik.handleChange}
 						value={formik.values.id}
 						name='id'
+						disabled={statusPage === 'edit' ? true : false}
 					/>
 					<p style={{ color: 'red' }}>{formik.errors.id}</p>
 				</div>
