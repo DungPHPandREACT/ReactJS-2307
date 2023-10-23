@@ -32,7 +32,6 @@ function App() {
 		},
 	]);
 
-
 	return (
 		<div className='App'>
 			<Navbar color='dark' dark>
@@ -64,7 +63,10 @@ function App() {
 					}
 				/>
 				<Route path='/edit' element={<CreateProduct />} />
-				<Route path='/product/id' element={<Detail />} />
+				<Route path='/product/:id' 
+						element={
+						<Detail listProducts={listProducts}/>
+				} />
 			</Routes>
 		</div>
 	);

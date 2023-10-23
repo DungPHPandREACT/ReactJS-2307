@@ -12,8 +12,8 @@ const { Meta } = Card;
 const ShowProduct = ({ listProducts }) => {
 	const navigate = useNavigate();
 
-	const handleRedirectPage = () => {
-		navigate('/product/id');
+	const handleRedirectPage = (idProduct) => {
+		navigate(`/product/${idProduct}`);
 	};
 
 	return (
@@ -40,7 +40,9 @@ const ShowProduct = ({ listProducts }) => {
 						>
 							<Meta
 								title={
-									<span onClick={handleRedirectPage}>{product.title}</span>
+									<span onClick={() => handleRedirectPage(product.id)}>
+										{product.title}
+									</span>
 								}
 								description={product.description}
 							/>

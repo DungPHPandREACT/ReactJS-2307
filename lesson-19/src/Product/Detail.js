@@ -1,14 +1,29 @@
 import { Col, Row } from 'antd';
-import React from 'react';
+import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { Container } from 'reactstrap';
 
-const Detail = () => {
+const Detail = ({ listProducts }) => {
+	const params = useParams();
+
+	const [productDetail, setProductDetail] = useState(null);
+
+	if (params.id) {
+		const product = listProducts.find((element) => element.id == params.id);
+
+		if (product !== undefined && productDetail == null) {
+			//cập nhật lại state
+			setProductDetail({ ...product });
+		}
+	}
+
 	return (
 		<Container>
 			<Row style={{ marginTop: '24px' }}>
 				<Col span={12}>
 					<img
-						src='https://theecommmanager.com/wp-content/uploads/sites/6/2020/07/17-Product-Attribute-Examples-Types-for-Ecommerce-01.png'
+						// src={productDetail !== null ? productDetail.image : ''}
+						src={productDetail?.image}
 						alt='Image product'
 						style={{
 							width: '100%',
@@ -16,8 +31,10 @@ const Detail = () => {
 					/>
 				</Col>
 				<Col span={12} style={{ paddingLeft: '24px' }}>
-					<h1>Product 1</h1>
-					<h2>This is description product 1</h2>
+					{/* <h1>{productDetail !== null ? productDetail.title : ''}</h1> */}
+					<h1>{productDetail?.title}</h1>
+					{/* <h2>{productDetail !== null ? productDetail.description : ''}</h2> */}
+					<h2>{productDetail?.description}</h2>
 				</Col>
 			</Row>
 		</Container>
