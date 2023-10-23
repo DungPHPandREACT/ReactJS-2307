@@ -62,11 +62,19 @@ function App() {
 						/>
 					}
 				/>
-				<Route path='/edit' element={<CreateProduct />} />
-				<Route path='/product/:id' 
-						element={
-						<Detail listProducts={listProducts}/>
-				} />
+				<Route
+					path='/edit/:id'
+					element={
+						<CreateProduct
+							setListProducts={setListProducts}
+							listProducts={listProducts}
+						/>
+					}
+				/>
+				<Route
+					path='/product/:id'
+					element={<Detail listProducts={listProducts} />}
+				/>
 			</Routes>
 		</div>
 	);

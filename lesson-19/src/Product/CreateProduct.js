@@ -1,10 +1,12 @@
 import { Button, Input } from 'antd';
 import { useFormik } from 'formik';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
 import { Container } from 'reactstrap';
 import * as Yup from 'yup';
 
 const CreateProduct = ({ listProducts, setListProducts }) => {
+	const [statusPage, setStatusPage] = useState('create');
 	// Cách 1
 	// const product = {};
 	// const getId = (e) => {
@@ -28,15 +30,28 @@ const CreateProduct = ({ listProducts, setListProducts }) => {
 	// };
 
 	// Cách 2
+	// Get data
+	const params = useParams();
+	const location = useLocation();
+	let product = null;
+
+	if (params.id) {
+		product = listProducts.find((element) => element.id == params.id);
+	}
+
 	const formik = useFormik({
 		initialValues: {
-			id: '',
-			title: '',
-			description: '',
-			image: '',
+			id: product != null ? product.id : '',
+			title: product != null ? product.title : '',
+			description: product != null ? product.description : '',
+			image: product != null ? product.image : '',
 		},
 		onSubmit: (values) => {
-			setListProducts([...listProducts, values]);
+			if (statusPage === 'create') {
+				setListProducts([...listProducts, values]);
+			} else {
+				console.log('edit product');
+			}
 		},
 		validationSchema: Yup.object().shape({
 			id: Yup.number().required('Bắt buộc phải có id'),
@@ -52,6 +67,10 @@ const CreateProduct = ({ listProducts, setListProducts }) => {
 		}),
 	});
 
+	if (location.pathname.includes('/edit') && statusPage !== 'edit') {
+		setStatusPage('edit');
+	}
+
 	return (
 		<Container>
 			<form onSubmit={formik.handleSubmit}>
@@ -61,6 +80,7 @@ const CreateProduct = ({ listProducts, setListProducts }) => {
 						placeholder='Enter your id product'
 						size='large'
 						onChange={formik.handleChange}
+						value={formik.values.id}
 						name='id'
 					/>
 					<p style={{ color: 'red' }}>{formik.errors.id}</p>
@@ -70,6 +90,7 @@ const CreateProduct = ({ listProducts, setListProducts }) => {
 						addonBefore='Title'
 						placeholder='Enter your title product'
 						size='large'
+						value={formik.values.title}
 						onChange={formik.handleChange}
 						name='title'
 					/>
@@ -80,6 +101,7 @@ const CreateProduct = ({ listProducts, setListProducts }) => {
 						addonBefore='Description'
 						placeholder='Enter your description product'
 						size='large'
+						value={formik.values.description}
 						onChange={formik.handleChange}
 						name='description'
 					/>
@@ -90,6 +112,7 @@ const CreateProduct = ({ listProducts, setListProducts }) => {
 						addonBefore='Image'
 						placeholder='Enter your image product'
 						size='large'
+						value={formik.values.image}
 						onChange={formik.handleChange}
 						name='image'
 					/>
@@ -98,7 +121,9 @@ const CreateProduct = ({ listProducts, setListProducts }) => {
 
 				<div className='mt-5'>
 					{/* <Button type='primary'>Add Product</Button> */}
-					<button type='submit'>Add Product</button>
+					<button type='submit'>
+						{statusPage === 'create' ? 'Add Product' : 'Edit Product'}
+					</button>
 				</div>
 			</form>
 		</Container>

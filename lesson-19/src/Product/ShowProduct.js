@@ -12,8 +12,8 @@ const { Meta } = Card;
 const ShowProduct = ({ listProducts }) => {
 	const navigate = useNavigate();
 
-	const handleRedirectPage = (idProduct) => {
-		navigate(`/product/${idProduct}`);
+	const handleRedirectPage = (idProduct, type = 'product') => {
+		navigate(`/${type}/${idProduct}`);
 	};
 
 	return (
@@ -34,7 +34,9 @@ const ShowProduct = ({ listProducts }) => {
 							}}
 							cover={<img alt='example' src={product.image} />}
 							actions={[
-								<EditOutlined key='edit' />,
+								<span onClick={() => handleRedirectPage(product.id, 'edit')}>
+									<EditOutlined key='edit' />
+								</span>,
 								<EllipsisOutlined key='ellipsis' />,
 							]}
 						>
