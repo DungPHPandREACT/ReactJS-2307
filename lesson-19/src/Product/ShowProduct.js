@@ -6,32 +6,15 @@ import {
 } from '@ant-design/icons';
 import { Avatar, Card, Col, Row } from 'antd';
 import { Container } from 'reactstrap';
+import { NavLink, useNavigate } from 'react-router-dom';
 const { Meta } = Card;
 
-const ShowProduct = () => {
-	const [listProducts, setListProducts] = useState([
-		{
-			id: 1,
-			title: 'Product 1',
-			description: 'This is the description product 1',
-			image:
-				'https://theecommmanager.com/wp-content/uploads/sites/6/2020/07/17-Product-Attribute-Examples-Types-for-Ecommerce-01.png',
-		},
-		{
-			id: 2,
-			title: 'Product 2',
-			description: 'This is the description product 2',
-			image:
-				'https://theecommmanager.com/wp-content/uploads/sites/6/2020/07/17-Product-Attribute-Examples-Types-for-Ecommerce-01.png',
-		},
-		{
-			id: 3,
-			title: 'Product 3',
-			description: 'This is the description product 3',
-			image:
-				'https://theecommmanager.com/wp-content/uploads/sites/6/2020/07/17-Product-Attribute-Examples-Types-for-Ecommerce-01.png',
-		},
-	]);
+const ShowProduct = ({ listProducts }) => {
+	const navigate = useNavigate();
+
+	const handleRedirectPage = () => {
+		navigate('/product/id');
+	};
 
 	return (
 		<Container className='mt-5'>
@@ -55,7 +38,12 @@ const ShowProduct = () => {
 								<EllipsisOutlined key='ellipsis' />,
 							]}
 						>
-							<Meta title={product.title} description={product.description} />
+							<Meta
+								title={
+									<span onClick={handleRedirectPage}>{product.title}</span>
+								}
+								description={product.description}
+							/>
 						</Card>
 					</Col>
 				))}

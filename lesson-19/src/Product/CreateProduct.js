@@ -4,7 +4,7 @@ import React from 'react';
 import { Container } from 'reactstrap';
 import * as Yup from 'yup';
 
-const CreateProduct = () => {
+const CreateProduct = ({ listProducts, setListProducts }) => {
 	// Cách 1
 	// const product = {};
 	// const getId = (e) => {
@@ -36,7 +36,7 @@ const CreateProduct = () => {
 			image: '',
 		},
 		onSubmit: (values) => {
-			console.log(values);
+			setListProducts([...listProducts, values]);
 		},
 		validationSchema: Yup.object().shape({
 			id: Yup.number().required('Bắt buộc phải có id'),
