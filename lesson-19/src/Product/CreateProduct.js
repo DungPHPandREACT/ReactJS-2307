@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { Container } from 'reactstrap';
 import * as Yup from 'yup';
+import { db } from '../firebase/InitFirebase';
+import { addDoc, collection } from 'firebase/firestore';
 
 const CreateProduct = ({ listProducts, setListProducts }) => {
 	const [statusPage, setStatusPage] = useState('create');
@@ -47,9 +49,16 @@ const CreateProduct = ({ listProducts, setListProducts }) => {
 			description: product != null ? product.description : '',
 			image: product != null ? product.image : '',
 		},
-		onSubmit: (values) => {
+		onSubmit: async (values) => {
 			if (statusPage === 'create') {
 				setListProducts([...listProducts, values]);
+				try {
+					const docRef = await addDoc(collection(db, "products"), values);
+					console.log("Document written with ID: ", docRef.id);
+				  } catch (e) {
+					console.error("Error adding document: ", e);
+				  }
+				  
 				messageApi.open({
 					type: 'success',
 					content: 'Create succcessfully',

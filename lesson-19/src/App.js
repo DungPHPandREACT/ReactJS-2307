@@ -6,31 +6,27 @@ import ShowProduct from './Product/ShowProduct';
 import CreateProduct from './Product/CreateProduct';
 import Detail from './Product/Detail';
 import { useState } from 'react';
+import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
+import { db } from './firebase/InitFirebase';
 
 function App() {
-	const [listProducts, setListProducts] = useState([
-		{
-			id: 1,
-			title: 'Product 1',
-			description: 'This is the description product 1',
-			image:
-				'https://theecommmanager.com/wp-content/uploads/sites/6/2020/07/17-Product-Attribute-Examples-Types-for-Ecommerce-01.png',
-		},
-		{
-			id: 2,
-			title: 'Product 2',
-			description: 'This is the description product 2',
-			image:
-				'https://theecommmanager.com/wp-content/uploads/sites/6/2020/07/17-Product-Attribute-Examples-Types-for-Ecommerce-01.png',
-		},
-		{
-			id: 3,
-			title: 'Product 3',
-			description: 'This is the description product 3',
-			image:
-				'https://theecommmanager.com/wp-content/uploads/sites/6/2020/07/17-Product-Attribute-Examples-Types-for-Ecommerce-01.png',
-		},
-	]);
+	const [listProducts, setListProducts] = useState([]);
+	const [isLoading, setIsLoading] = useState(true);
+
+	const getListProduct = async () => {
+		const listProductsFirebase = [];
+		const querySnapshot = await getDocs(collection(db, 'products'));
+		querySnapshot.forEach((doc) => {
+			// console.log(doc.id, ' => ', doc.data());
+			listProductsFirebase.push(doc.data());
+		});
+		setIsLoading(false);
+		setListProducts([...listProductsFirebase]);
+	};
+
+	useState(() => {
+		getListProduct();
+	}, []);
 
 	return (
 		<div className='App'>
@@ -51,31 +47,38 @@ function App() {
 				{/* <NavbarBrand href='/create'>Create product</NavbarBrand> */}
 			</Navbar>
 
-			<Routes>
-				<Route path='/' element={<ShowProduct listProducts={listProducts} />} />
-				<Route
-					path='/create'
-					element={
-						<CreateProduct
-							setListProducts={setListProducts}
-							listProducts={listProducts}
-						/>
-					}
-				/>
-				<Route
-					path='/edit/:id'
-					element={
-						<CreateProduct
-							setListProducts={setListProducts}
-							listProducts={listProducts}
-						/>
-					}
-				/>
-				<Route
-					path='/product/:id'
-					element={<Detail listProducts={listProducts} />}
-				/>
-			</Routes>
+			{isLoading ? (
+				<h1 style={{ textAlign: 'center' }}>Loading ... </h1>
+			) : (
+				<Routes>
+					<Route
+						path='/'
+						element={<ShowProduct listProducts={listProducts} />}
+					/>
+					<Route
+						path='/create'
+						element={
+							<CreateProduct
+								setListProducts={setListProducts}
+								listProducts={listProducts}
+							/>
+						}
+					/>
+					<Route
+						path='/edit/:id'
+						element={
+							<CreateProduct
+								setListProducts={setListProducts}
+								listProducts={listProducts}
+							/>
+						}
+					/>
+					<Route
+						path='/product/:id'
+						element={<Detail listProducts={listProducts} />}
+					/>
+				</Routes>
+			)}
 		</div>
 	);
 }
