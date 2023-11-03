@@ -53,7 +53,8 @@ const CreateProduct = ({ listProducts, setListProducts }) => {
 			if (statusPage === 'create') {
 				setListProducts([...listProducts, values]);
 				try {
-					const docRef = await addDoc(collection(db, "products"), values);
+					const docRef = 
+					await addDoc(collection(db, "products"), values);
 					console.log("Document written with ID: ", docRef.id);
 				  } catch (e) {
 					console.error("Error adding document: ", e);

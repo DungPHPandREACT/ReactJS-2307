@@ -15,7 +15,8 @@ function App() {
 
 	const getListProduct = async () => {
 		const listProductsFirebase = [];
-		const querySnapshot = await getDocs(collection(db, 'products'));
+		const querySnapshot = 
+		await getDocs(collection(db, 'products'));
 		querySnapshot.forEach((doc) => {
 			// console.log(doc.id, ' => ', doc.data());
 			listProductsFirebase.push(doc.data());
@@ -44,7 +45,6 @@ function App() {
 					Quản lý Product
 				</NavLink>
 				<NavLink to='/create'>Create product</NavLink>
-				{/* <NavbarBrand href='/create'>Create product</NavbarBrand> */}
 			</Navbar>
 
 			{isLoading ? (
