@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import { useState } from 'react';
 import './App.css';
 import useInput from './hooks/useInput';
+import { useDebouncedCallback } from 'use-lodash-debounce';
 
 function App() {
 	// Cách thông thường
@@ -28,14 +29,14 @@ function App() {
 	const input3 = useInput('description');
 
 
-	const handleShowUser = () => {
+	const handleShowUser = useDebouncedCallback(() => {
 		console.log(
 			'name, age, description: ',
 			input1.value,
 			input2.value,
 			input3.value
 		);
-	};
+	}, 1000);
 	return (
 		<div className='App'>
 			<div>
