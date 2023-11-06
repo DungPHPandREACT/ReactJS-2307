@@ -50,28 +50,35 @@ const Header = () => {
                   width: 40,
                 }}
               />
-              <span style={{ marginLeft: '8px' }}>Quizz Test</span>
+              <NavLink
+                style={{
+                  color: 'white',
+                }}
+                to="/"
+              >
+                <span style={{ marginLeft: '8px' }}>Quizz Test</span>
+              </NavLink>
             </div>
           </NavbarBrand>
 
           <div className="pages">
             <span style={{ marginLeft: '8px', marginRight: '8px' }}>
-              <NavLink className="nav-bar-item" to="/">
+              <NavLink className="nav-bar-item" to="?subject=reactjs">
                 ReactJS
               </NavLink>
             </span>
             <span style={{ marginLeft: '8px', marginRight: '8px' }}>
-              <NavLink className="nav-bar-item" to="/">
+              <NavLink className="nav-bar-item" to="?subject=javascript">
                 Javascript
               </NavLink>
             </span>
             <span style={{ marginLeft: '8px', marginRight: '8px' }}>
-              <NavLink className="nav-bar-item" to="/">
+              <NavLink className="nav-bar-item" to="?subject=html">
                 HTML
               </NavLink>
             </span>
             <span style={{ marginLeft: '8px', marginRight: '8px' }}>
-              <NavLink className="nav-bar-item" to="/">
+              <NavLink className="nav-bar-item" to="?subject=css">
                 CSS
               </NavLink>
             </span>
