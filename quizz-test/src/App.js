@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   ChakraProvider,
   Box,
@@ -17,18 +17,33 @@ import { Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import Feedback from './pages/Feedback';
 import Profile from './pages/Profile';
+import CreateQuizz from './pages/CreateQuizz';
+import AdminRoute from './private-routes/AdminRoute';
+import AppContext from './contexts/AppContext';
 
 function App() {
+  const [userCurrent, setUserCurrent] = useState({});
+
   return (
     <ChakraProvider theme={theme}>
-      <Header />
-      <Container className="mt-5" style={{ minWidth: '936px' }}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/feedback" element={<Feedback />} />
-          <Route path="/profile" element={<Profile />} />
-        </Routes>
-      </Container>
+      <AppContext.Provider
+        value={{
+          userCurrent: userCurrent,
+          setUserCurrent: setUserCurrent,
+        }}
+      >
+        <Header />
+        <Container className="mt-5" style={{ minWidth: '936px' }}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/feedback" element={<Feedback />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/admin" element={<AdminRoute />}>
+              <Route path="create-quizz" element={<CreateQuizz />} />
+            </Route>
+          </Routes>
+        </Container>
+      </AppContext.Provider>
     </ChakraProvider>
   );
 }

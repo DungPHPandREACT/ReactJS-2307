@@ -13,18 +13,22 @@ import {
   useDisclosure,
   useToast,
 } from '@chakra-ui/react';
-import React, { useEffect, useRef, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { Navbar, NavbarBrand } from 'reactstrap';
 import ModalAuth from './ModalAuth';
 import './styles.css';
+import AppContext from '../../contexts/AppContext';
 
 const Header = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
 
+  const navigate = useNavigate();
+
+  const { userCurrent, setUserCurrent } = useContext(AppContext);
+
   const [users, setUsers] = useState([]);
-  const [userCurrent, setUserCurrent] = useState({});
 
   const initialRef = useRef(null);
   const finalRef = useRef(null);
@@ -114,14 +118,18 @@ const Header = () => {
     }
   };
 
+  const handleRedirect = link => {
+    navigate(link);
+  };
+
   useEffect(() => {
     const user_info = JSON.parse(localStorage.getItem('user_info'));
 
     if (user_info?.username && user_info?.email) {
       setUserCurrent({ ...user_info });
-    } else {
-      handleGetUsers();
     }
+
+    handleGetUsers();
   }, []);
 
   return (
@@ -214,7 +222,12 @@ const Header = () => {
                   <>
                     <MenuDivider />
                     <MenuGroup title="Admin">
-                      <MenuItem icon={<AddIcon />}>Create quizz</MenuItem>
+                      <MenuItem
+                        onClick={() => handleRedirect('/admin/create-quizz')}
+                        icon={<AddIcon />}
+                      >
+                        Create quizz
+                      </MenuItem>
                     </MenuGroup>
                   </>
                 )}
