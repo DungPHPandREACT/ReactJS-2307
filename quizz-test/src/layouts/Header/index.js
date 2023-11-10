@@ -24,6 +24,7 @@ const Header = () => {
   const toast = useToast();
 
   const [users, setUsers] = useState([]);
+  const [userCurrent, setUserCurrent] = useState({});
 
   const initialRef = useRef(null);
   const finalRef = useRef(null);
@@ -35,7 +36,6 @@ const Header = () => {
   };
 
   const handleRegister = async newUser => {
-    console.log('user: ', newUser);
     let isExistEmail = false;
     for (let user of users) {
       if (user.email === newUser.email) {
@@ -56,10 +56,39 @@ const Header = () => {
       const content = await response.json();
       setUsers([...users, content]);
       onClose();
+      setUserCurrent({ ...content });
     } else {
       console.log('Email đã tồn tại');
       toast({
         title: 'Email đã tồn tại',
+        status: 'error',
+        isClosable: true,
+      });
+    }
+  };
+
+  const handleLogin = infoUser => {
+    let isLogin = false;
+
+    for (let user of users) {
+      if (
+        user.email === infoUser.email &&
+        user.password === infoUser.password
+      ) {
+        toast({
+          title: 'Đăng nhập thành công',
+          status: 'success',
+          isClosable: true,
+        });
+        isLogin = true;
+        onClose();
+        setUserCurrent({ ...user });
+      }
+    }
+
+    if (isLogin === false) {
+      toast({
+        title: 'Đăng nhập không thành công',
         status: 'error',
         isClosable: true,
       });
@@ -91,6 +120,7 @@ const Header = () => {
         onClose={onClose}
         statusAuth={statusAuth.current}
         onRegister={handleRegister}
+        onLogin={handleLogin}
       />
       <Navbar color="dark" dark sticky="top">
         <div
@@ -150,51 +180,50 @@ const Header = () => {
             </span>
           </div>
 
-          {/* Chưa đăng nhập */}
-          <Stack spacing={4} direction="row" align="center">
-            <Button
-              colorScheme="teal"
-              size="sm"
-              onClick={() => handleOpenModalAuth('login')}
-            >
-              Đăng nhập
-            </Button>
+          {userCurrent.username ? (
+            <Menu>
+              <MenuButton rightIcon={<ChevronDownIcon />}>
+                <Stack spacing={4} direction="row" align="center">
+                  <Avatar name={userCurrent.username} />
+                  <Text color="white" as="b">
+                    {userCurrent.username}
+                  </Text>
+                </Stack>
+              </MenuButton>
 
-            <Button
-              colorScheme="teal"
-              size="sm"
-              variant="outline"
-              onClick={() => handleOpenModalAuth('register')}
-            >
-              Đăng ký
-            </Button>
-          </Stack>
+              <MenuList>
+                <MenuGroup title="Profile">
+                  <MenuItem>Edit profile</MenuItem>
+                  <MenuItem>Change password</MenuItem>
+                  <MenuItem>Log out</MenuItem>
+                </MenuGroup>
+                <MenuDivider />
+                <MenuGroup title="Admin">
+                  <MenuItem icon={<AddIcon />}>Create quizz</MenuItem>
+                  <MenuItem icon={<AddIcon />}>Create quizz</MenuItem>
+                </MenuGroup>
+              </MenuList>
+            </Menu>
+          ) : (
+            <Stack spacing={4} direction="row" align="center">
+              <Button
+                colorScheme="teal"
+                size="sm"
+                onClick={() => handleOpenModalAuth('login')}
+              >
+                Đăng nhập
+              </Button>
 
-          {/* Sau khi đăng nhập */}
-
-          {/* <Menu>
-            <MenuButton rightIcon={<ChevronDownIcon />}>
-              <Stack spacing={4} direction="row" align="center">
-                <Avatar name="Đỗ Tiến Dũng" />
-                <Text color="white" as="b">
-                  Đỗ Tiến Dũng
-                </Text>
-              </Stack>
-            </MenuButton>
-
-            <MenuList>
-              <MenuGroup title="Profile">
-                <MenuItem>Edit profile</MenuItem>
-                <MenuItem>Change password</MenuItem>
-                <MenuItem>Log out</MenuItem>
-              </MenuGroup>
-              <MenuDivider />
-              <MenuGroup title="Admin">
-                <MenuItem icon={<AddIcon />}>Create quizz</MenuItem>
-                <MenuItem icon={<AddIcon />}>Create quizz</MenuItem>
-              </MenuGroup>
-            </MenuList>
-          </Menu> */}
+              <Button
+                colorScheme="teal"
+                size="sm"
+                variant="outline"
+                onClick={() => handleOpenModalAuth('register')}
+              >
+                Đăng ký
+              </Button>
+            </Stack>
+          )}
         </div>
       </Navbar>
     </>

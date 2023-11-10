@@ -22,6 +22,7 @@ const ModalAuth = ({
   onClose,
   statusAuth,
   onRegister,
+  onLogin,
 }) => {
   const formik = useFormik({
     initialValues: {
@@ -39,7 +40,9 @@ const ModalAuth = ({
         .max(16, 'Password too long'),
     }),
     onSubmit: values => {
-      if (statusAuth !== 'login') {
+      if (statusAuth === 'login') {
+        onLogin(values);
+      } else {
         onRegister(values);
       }
     },
