@@ -97,6 +97,11 @@ const Header = () => {
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('user_info');
+    setUserCurrent({});
+  };
+
   const handleGetUsers = async () => {
     const API_USERS = 'http://localhost:8080/users';
 
@@ -203,13 +208,16 @@ const Header = () => {
                 <MenuGroup title="Profile">
                   <MenuItem>Edit profile</MenuItem>
                   <MenuItem>Change password</MenuItem>
-                  <MenuItem>Log out</MenuItem>
+                  <MenuItem onClick={handleLogout}>Log out</MenuItem>
                 </MenuGroup>
-                <MenuDivider />
-                <MenuGroup title="Admin">
-                  <MenuItem icon={<AddIcon />}>Create quizz</MenuItem>
-                  <MenuItem icon={<AddIcon />}>Create quizz</MenuItem>
-                </MenuGroup>
+                {userCurrent?.role === 'admin' && (
+                  <>
+                    <MenuDivider />
+                    <MenuGroup title="Admin">
+                      <MenuItem icon={<AddIcon />}>Create quizz</MenuItem>
+                    </MenuGroup>
+                  </>
+                )}
               </MenuList>
             </Menu>
           ) : (

@@ -4,13 +4,21 @@
       "email": "tiendung@gmail.com",
       "username": "tiendung",
       "password": "123456",
-      "id": 1
+      "id": 1,
+      "role": "admin"
     },
     {
       "email": "admin@gmail.com",
       "username": "admin",
       "password": "1234567",
-      "id": 2
+      "id": 2,
+      "role": "admin"
+    },
+    {
+      "email": "test@gmail.com",
+      "username": "test name",
+      "password": "1234567",
+      "id": 3
     }
   ]
 }
