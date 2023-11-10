@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { Navigate, Outlet, Route, useNavigate } from 'react-router-dom';
 import AppContext from '../contexts/AppContext';
 
-const AdminRoute = ({ path, element }) => {
+const AdminRoute = () => {
   const navigate = useNavigate();
   const { userCurrent } = useContext(AppContext);
   const role = userCurrent?.role ?? 'user';

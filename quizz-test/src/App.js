@@ -20,6 +20,7 @@ import Profile from './pages/Profile';
 import CreateQuizz from './pages/CreateQuizz';
 import AdminRoute from './private-routes/AdminRoute';
 import AppContext from './contexts/AppContext';
+import QuizzTest from './pages/QuizzTest';
 
 function App() {
   const [userCurrent, setUserCurrent] = useState({});
@@ -41,6 +42,7 @@ function App() {
             <Route path="/admin" element={<AdminRoute />}>
               <Route path="create-quizz" element={<CreateQuizz />} />
             </Route>
+            <Route path="/quizz-test/:slug" element={<QuizzTest />} />
           </Routes>
         </Container>
       </AppContext.Provider>
