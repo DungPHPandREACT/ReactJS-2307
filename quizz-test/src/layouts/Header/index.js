@@ -1,6 +1,7 @@
 import { AddIcon, ChevronDownIcon } from '@chakra-ui/icons';
 import {
   Avatar,
+  Button,
   Menu,
   MenuButton,
   MenuDivider,
@@ -97,7 +98,7 @@ const Header = () => {
           </div>
 
           {/* Chưa đăng nhập */}
-          {/* <Stack spacing={4} direction="row" align="center">
+          <Stack spacing={4} direction="row" align="center">
             <Button
               colorScheme="teal"
               size="sm"
@@ -114,11 +115,11 @@ const Header = () => {
             >
               Đăng ký
             </Button>
-          </Stack> */}
+          </Stack>
 
           {/* Sau khi đăng nhập */}
 
-          <Menu>
+          {/* <Menu>
             <MenuButton rightIcon={<ChevronDownIcon />}>
               <Stack spacing={4} direction="row" align="center">
                 <Avatar name="Đỗ Tiến Dũng" />
@@ -140,7 +141,7 @@ const Header = () => {
                 <MenuItem icon={<AddIcon />}>Create quizz</MenuItem>
               </MenuGroup>
             </MenuList>
-          </Menu>
+          </Menu> */}
         </div>
       </Navbar>
     </>
