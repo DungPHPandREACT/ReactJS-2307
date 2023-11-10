@@ -1,9 +1,21 @@
+import { AddIcon, ChevronDownIcon } from '@chakra-ui/icons';
+import {
+  Avatar,
+  Menu,
+  MenuButton,
+  MenuDivider,
+  MenuGroup,
+  MenuItem,
+  MenuList,
+  Stack,
+  Text,
+  useDisclosure,
+} from '@chakra-ui/react';
 import React, { useRef } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Nav, NavItem, Navbar, NavbarBrand } from 'reactstrap';
-import './styles.css';
-import { Button, Stack, useDisclosure } from '@chakra-ui/react';
+import { Navbar, NavbarBrand } from 'reactstrap';
 import ModalAuth from './ModalAuth';
+import './styles.css';
 
 const Header = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -84,7 +96,8 @@ const Header = () => {
             </span>
           </div>
 
-          <Stack spacing={4} direction="row" align="center">
+          {/* Chưa đăng nhập */}
+          {/* <Stack spacing={4} direction="row" align="center">
             <Button
               colorScheme="teal"
               size="sm"
@@ -101,7 +114,33 @@ const Header = () => {
             >
               Đăng ký
             </Button>
-          </Stack>
+          </Stack> */}
+
+          {/* Sau khi đăng nhập */}
+
+          <Menu>
+            <MenuButton rightIcon={<ChevronDownIcon />}>
+              <Stack spacing={4} direction="row" align="center">
+                <Avatar name="Đỗ Tiến Dũng" />
+                <Text color="white" as="b">
+                  Đỗ Tiến Dũng
+                </Text>
+              </Stack>
+            </MenuButton>
+
+            <MenuList>
+              <MenuGroup title="Profile">
+                <MenuItem>Edit profile</MenuItem>
+                <MenuItem>Change password</MenuItem>
+                <MenuItem>Log out</MenuItem>
+              </MenuGroup>
+              <MenuDivider />
+              <MenuGroup title="Admin">
+                <MenuItem icon={<AddIcon />}>Create quizz</MenuItem>
+                <MenuItem icon={<AddIcon />}>Create quizz</MenuItem>
+              </MenuGroup>
+            </MenuList>
+          </Menu>
         </div>
       </Navbar>
     </>
