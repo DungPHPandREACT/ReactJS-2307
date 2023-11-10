@@ -12,7 +12,7 @@ import {
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Navbar, NavbarBrand } from 'reactstrap';
 import ModalAuth from './ModalAuth';
@@ -20,6 +20,8 @@ import './styles.css';
 
 const Header = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const [users, setUsers] = useState([]);
 
   const initialRef = useRef(null);
   const finalRef = useRef(null);
@@ -29,6 +31,22 @@ const Header = () => {
     statusAuth.current = status;
     onOpen();
   };
+
+  const handleGetUsers = async () => {
+    const API_USERS = 'http://localhost:8080/users';
+
+    try {
+      const response = await fetch(API_USERS);
+      const data = await response.json();
+      setUsers([...data])
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    handleGetUsers();
+  }, []);
 
   return (
     <>
