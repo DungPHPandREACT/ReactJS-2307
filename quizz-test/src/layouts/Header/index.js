@@ -11,6 +11,7 @@ import {
   Stack,
   Text,
   useDisclosure,
+  useToast,
 } from '@chakra-ui/react';
 import React, { useEffect, useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
@@ -20,6 +21,7 @@ import './styles.css';
 
 const Header = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
 
   const [users, setUsers] = useState([]);
 
@@ -32,13 +34,45 @@ const Header = () => {
     onOpen();
   };
 
+  const handleRegister = async newUser => {
+    console.log('user: ', newUser);
+    let isExistEmail = false;
+    for (let user of users) {
+      if (user.email === newUser.email) {
+        isExistEmail = true;
+        break;
+      }
+    }
+    if (isExistEmail === false) {
+      console.log('Đăng ký thành công');
+      const response = await fetch('http://localhost:8080/users', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newUser),
+      });
+      const content = await response.json();
+      setUsers([...users, content]);
+      onClose();
+    } else {
+      console.log('Email đã tồn tại');
+      toast({
+        title: 'Email đã tồn tại',
+        status: 'error',
+        isClosable: true,
+      });
+    }
+  };
+
   const handleGetUsers = async () => {
     const API_USERS = 'http://localhost:8080/users';
 
     try {
       const response = await fetch(API_USERS);
       const data = await response.json();
-      setUsers([...data])
+      setUsers([...data]);
     } catch (e) {
       console.log(e);
     }
@@ -56,6 +90,7 @@ const Header = () => {
         isOpen={isOpen}
         onClose={onClose}
         statusAuth={statusAuth.current}
+        onRegister={handleRegister}
       />
       <Navbar color="dark" dark sticky="top">
         <div

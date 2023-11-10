@@ -15,7 +15,14 @@ import { useFormik } from 'formik';
 import React from 'react';
 import * as Yup from 'yup';
 
-const ModalAuth = ({ initialRef, finalRef, isOpen, onClose, statusAuth }) => {
+const ModalAuth = ({
+  initialRef,
+  finalRef,
+  isOpen,
+  onClose,
+  statusAuth,
+  onRegister,
+}) => {
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -32,7 +39,9 @@ const ModalAuth = ({ initialRef, finalRef, isOpen, onClose, statusAuth }) => {
         .max(16, 'Password too long'),
     }),
     onSubmit: values => {
-      console.log('values: ', values);
+      if (statusAuth !== 'login') {
+        onRegister(values);
+      }
     },
   });
 
