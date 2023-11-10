@@ -57,6 +57,7 @@ const Header = () => {
       setUsers([...users, content]);
       onClose();
       setUserCurrent({ ...content });
+      localStorage.setItem('user_info', JSON.stringify(content));
     } else {
       console.log('Email đã tồn tại');
       toast({
@@ -83,6 +84,7 @@ const Header = () => {
         isLogin = true;
         onClose();
         setUserCurrent({ ...user });
+        localStorage.setItem('user_info', JSON.stringify(user));
       }
     }
 
@@ -108,7 +110,13 @@ const Header = () => {
   };
 
   useEffect(() => {
-    handleGetUsers();
+    const user_info = JSON.parse(localStorage.getItem('user_info'));
+
+    if (user_info?.username && user_info?.email) {
+      setUserCurrent({ ...user_info });
+    } else {
+      handleGetUsers();
+    }
   }, []);
 
   return (
