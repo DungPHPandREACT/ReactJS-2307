@@ -8,79 +8,18 @@ import {
   StackDivider,
   Text,
 } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { CardBody } from 'reactstrap';
 
 const Home = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
-  const [keywordSubject, setKeywordSubject] = useState('');
 
-  const subjects = [
-    {
-      label: 'ReactJS',
-      id: 'reactjs',
-      questions: [
-        {
-          label: 'Tuyển chọn các câu hỏi phỏng vấn ReactJS (phần 1)',
-          id: '1',
-          category: 'reactjs', 
-          questions: [
-            {
-              
-            }
-          ]
-        },
-        {
-          label: 'Tuyển chọn các câu hỏi phỏng vấn ReactJS (phần 2)',
-          id: '2',
-        },
-      ],
-    },
-    {
-      label: 'Javascript',
-      id: 'javascript',
-      questions: [
-        {
-          label: 'Tuyển chọn các câu hỏi phỏng vấn ReactJS (phần 1)',
-          id: '3',
-        },
-        {
-          label: 'Tuyển chọn các câu hỏi phỏng vấn ReactJS (phần 2)',
-          id: '4',
-        },
-      ],
-    },
-    {
-      label: 'HTML',
-      id: 'html',
-      questions: [
-        {
-          label: 'Tuyển chọn các câu hỏi phỏng vấn ReactJS (phần 1)',
-          id: '5',
-        },
-        {
-          label: 'Tuyển chọn các câu hỏi phỏng vấn ReactJS (phần 2)',
-          id: '6',
-        },
-      ],
-    },
-    {
-      label: 'CSS',
-      id: 'css',
-      questions: [
-        {
-          label: 'Tuyển chọn các câu hỏi phỏng vấn ReactJS (phần 1)',
-          id: '7',
-        },
-        {
-          label: 'Tuyển chọn các câu hỏi phỏng vấn ReactJS (phần 2)',
-          id: '8',
-        },
-      ],
-    },
-  ];
+  const [listQuizzTest, setListQuizzTest] = useState([]);
+  const [listCategories, setListCategories] = useState([]);
+
+  const subjectCurrent = useRef('');
 
   const convertToSlug = text => {
     //Đổi chữ hoa thành chữ thường
@@ -119,71 +58,123 @@ const Home = () => {
     navigate(`quizz-test/${path}`);
   };
 
+  const handleGetListQuizzTest = async category => {
+    let filterCategory = '';
+    if (category !== undefined) {
+      filterCategory = `category=${category}`;
+    }
+
+    const API_QUIZZ_TEST = `http://localhost:8080/quizz-test?${filterCategory}`;
+
+    try {
+      const response = await fetch(API_QUIZZ_TEST);
+      const data = await response.json();
+
+      getListCategory(data);
+
+      setListQuizzTest([...data]);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const getListCategory = data => {
+    console.log(data);
+    const categories = [];
+
+    for (let element of data) {
+      if (!categories.includes(element.category)) {
+        categories.push(element.category);
+      }
+    }
+
+    setListCategories([...categories]);
+  };
+
   useEffect(() => {
     const queryString = searchParams.get('subject');
 
-    if (queryString === 'all') {
-      setKeywordSubject('');
+    if (
+      queryString === 'reactjs' ||
+      queryString === 'javascript' ||
+      queryString === 'html' ||
+      queryString === 'css'
+    ) {
+      subjectCurrent.current = queryString;
+      handleGetListQuizzTest(queryString);
     } else {
-      let isValue = false;
-      console.log('queryString: ', queryString);
-      for (let subject of subjects) {
-        if (queryString === subject.id) {
-          isValue = true;
-          setKeywordSubject(queryString);
-        }
-      }
-
-      if (isValue === false) {
-        setKeywordSubject('');
-        setSearchParams({ subject: 'all' });
-      }
+      handleGetListQuizzTest();
+      setSearchParams({ subject: 'all' });
     }
   }, [searchParams]);
+
+  useEffect(() => {
+    handleGetListQuizzTest();
+  }, []);
+
+  const jsxQuizzTest = listCategories.map(category =>
+    listQuizzTest
+      .filter(quizzTest => quizzTest.category === category)
+      .map(quizzTest => (
+        <Card>
+          <CardHeader>
+            <Heading size="md">
+              <span style={{ textTransform: 'uppercase' }}>{category}</span>
+            </Heading>
+          </CardHeader>
+
+          <CardBody>
+            <Stack divider={<StackDivider />} spacing="4">
+              <Box>
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Text fontSize="lg" as="span">
+                    {quizzTest.label}
+                  </Text>
+                  <div>
+                    <Button
+                      colorScheme="gray"
+                      size="sm"
+                      onClick={() =>
+                        handleRedirectPage(quizzTest.label, quizzTest.id)
+                      }
+                    >
+                      Thi thử
+                    </Button>
+                  </div>
+                </div>
+              </Box>
+            </Stack>
+          </CardBody>
+        </Card>
+      ))
+  );
 
   return (
     <div className="container-home">
       <Stack spacing={5}>
-        {subjects
-          .filter(subject => subject.id.includes(keywordSubject))
-          .map(subject => (
-            <Card>
-              <CardHeader>
-                <Heading size="md">{subject.label}</Heading>
-              </CardHeader>
+        {jsxQuizzTest.length === 0 ? (
+          <Card>
+            <CardHeader>
+              <Heading size="md">
+                <span style={{ textTransform: 'uppercase' }}>
+                  {subjectCurrent.current}
+                </span>
+              </Heading>
+            </CardHeader>
 
-              <CardBody>
-                <Stack divider={<StackDivider />} spacing="4">
-                  {subject.questions.map(question => (
-                    <Box key={question.id}>
-                      <div
-                        style={{
-                          display: 'flex',
-                          justifyContent: 'space-between',
-                          alignItems: 'center',
-                        }}
-                      >
-                        <Text fontSize="lg" as="span">
-                          {question.label}
-                        </Text>
-                        <div>
-                          <Button
-                            colorScheme="gray"
-                            size="sm"
-                            onClick={() =>
-                              handleRedirectPage(question.label, question.id)
-                            }
-                          >
-                            Thi thử
-                          </Button>
-                        </div>
-                      </div>
-                    </Box>
-                  ))}
-                </Stack>
-              </CardBody>
-            </Card>
-          ))}
+            <CardBody>
+              <h2>No data</h2>
+            </CardBody>
+          </Card>
+        ) : (
+          jsxQuizzTest
+        )}
       </Stack>
     </div>
   );

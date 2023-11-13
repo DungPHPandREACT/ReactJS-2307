@@ -10,11 +10,13 @@ import {
   Select,
   Stack,
   Textarea,
+  useToast,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { Input } from 'reactstrap';
 
 const CreateQuizz = () => {
+  const toast = useToast();
   const [label, setLabel] = useState('');
   const [category, setCategory] = useState('');
   const [questions, setQuestions] = useState([
@@ -30,7 +32,7 @@ const CreateQuizz = () => {
   };
 
   const handleSelectedCategory = event => {
-    console.log(event.target.value);
+    setCategory(event.target.value);
   };
 
   const handleAddQuestion = () => {
@@ -60,14 +62,28 @@ const CreateQuizz = () => {
     setQuestions([...questionsTemp]);
   };
 
-  const handleSaveQuizzTest = () => {
+  const handleSaveQuizzTest = async () => {
     const quizzTest = {
-      label: 'Tuyển chọn các câu hỏi phỏng vấn ReactJS (phần 1)',
-      category: 'reactjs',
+      label: label,
+      category: category,
       questions,
     };
 
-    console.log('quizzTest: ', quizzTest);
+    const response = await fetch('http://localhost:8080/quizz-test', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(quizzTest),
+    });
+
+    toast({
+      title: 'Tạo đề thi thành công',
+      status: 'success',
+      isClosable: true,
+    });
+    console.log('response: ', response);
   };
 
   console.log('questions: ', questions);

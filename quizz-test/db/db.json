@@ -21,5 +21,50 @@
       "id": 3
     }
   ],
-  "quizz-test": []
+  "quizz-test": [
+    {
+      "label": "Tuyển chọn những câu hỏi phỏng vấn reactjs (phần 1)",
+      "category": "reactjs",
+      "questions": [
+        {
+          "question": "Câu hỏi 1",
+          "answers": [
+            "Answer A",
+            "Answer B",
+            "Answer C",
+            "Answer D"
+          ],
+          "answer_correct": 1
+        }
+      ],
+      "id": 1
+    },
+    {
+      "label": "Tuyển chọn những câu hỏi phỏng vấn javascript (phần 1)",
+      "category": "javascript",
+      "questions": [
+        {
+          "question": "Câu hỏi 1",
+          "answers": [
+            "Answer A",
+            "Answer B",
+            "Answer C",
+            "Answer D"
+          ],
+          "answer_correct": 1
+        },
+        {
+          "question": "Câu hỏi 2",
+          "answers": [
+            "Answer A",
+            "Answer B",
+            "Answer C",
+            "Answer D"
+          ],
+          "answer_correct": 3
+        }
+      ],
+      "id": 2
+    }
+  ]
 }
