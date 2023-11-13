@@ -180,22 +180,22 @@ const Header = () => {
 
           <div className="pages">
             <span style={{ marginLeft: '8px', marginRight: '8px' }}>
-              <NavLink className="nav-bar-item" to="?subject=reactjs">
+              <NavLink className="nav-bar-item" to="/?subject=reactjs">
                 ReactJS
               </NavLink>
             </span>
             <span style={{ marginLeft: '8px', marginRight: '8px' }}>
-              <NavLink className="nav-bar-item" to="?subject=javascript">
+              <NavLink className="nav-bar-item" to="/?subject=javascript">
                 Javascript
               </NavLink>
             </span>
             <span style={{ marginLeft: '8px', marginRight: '8px' }}>
-              <NavLink className="nav-bar-item" to="?subject=html">
+              <NavLink className="nav-bar-item" to="/?subject=html">
                 HTML
               </NavLink>
             </span>
             <span style={{ marginLeft: '8px', marginRight: '8px' }}>
-              <NavLink className="nav-bar-item" to="?subject=css">
+              <NavLink className="nav-bar-item" to="/?subject=css">
                 CSS
               </NavLink>
             </span>

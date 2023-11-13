@@ -25,6 +25,12 @@ const Home = () => {
         {
           label: 'Tuyển chọn các câu hỏi phỏng vấn ReactJS (phần 1)',
           id: '1',
+          category: 'reactjs', 
+          questions: [
+            {
+              
+            }
+          ]
         },
         {
           label: 'Tuyển chọn các câu hỏi phỏng vấn ReactJS (phần 2)',
