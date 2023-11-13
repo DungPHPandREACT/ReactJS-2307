@@ -65,6 +65,63 @@
         }
       ],
       "id": 2
+    },
+    {
+      "label": "Đề thi HTML",
+      "category": "html",
+      "questions": [
+        {
+          "question": "Câu hỏi 1",
+          "answers": [
+            "Answer A",
+            "Answer B",
+            "Answer C",
+            "Answer D"
+          ],
+          "answer_correct": 1
+        },
+        {
+          "question": "Câu hỏi 2",
+          "answers": [
+            "Answer A",
+            "Answer B",
+            "Answer C",
+            "Answer D"
+          ],
+          "answer_correct": 1
+        },
+        {
+          "question": "Câu hỏi 3",
+          "answers": [
+            "Answer A",
+            "Answer B",
+            "Answer C",
+            "Answer D"
+          ],
+          "answer_correct": 1
+        },
+        {
+          "question": "Câu hỏi 4",
+          "answers": [
+            "Answer A",
+            "Answer B",
+            "Answer C",
+            "Answer D"
+          ],
+          "answer_correct": 1
+        },
+        {
+          "question": "Câu hỏi 5",
+          "answers": [
+            "Answer A",
+            "Answer B",
+            "Answer C",
+            "Answer D"
+          ],
+          "answer_correct": 1
+        }
+      ],
+      "id": 3
     }
   ]
 }
