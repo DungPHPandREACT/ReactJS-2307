@@ -1,10 +1,12 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { increment, decrement } from './actions/calculatorActions';
+// import { increment, decrement } from './actions/calculatorActions';
 import StudentAction from './StudentAction';
+import { decrement, increment } from './slices/CalculatorSlice';
 
 const App = () => {
 	const value = useSelector((state) => state.calculator);
+	console.log('value: ', value);
 	const listStudent = useSelector((state) => state.student);
 	const dispatch = useDispatch();
 
